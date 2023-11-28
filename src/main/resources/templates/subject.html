@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>과목 등록 결과 화면</title>
+</head>
+<body>
+<header th:insert="~{layout::nav}">
+</header>
+<h2>과목 등록</h2>
+<form action="#" th:action="@{/subjects}" th:object="${subject}" method="post">
+    <label for="subjectId">과목 아이디:</label>
+    <input type="text" id="subjectId" name="subjectId" required><br>
+
+    <label for="subjectName">과목명:</label>
+    <input type="text" id="subjectName" name="subjectName" required><br>
+
+    <label for="gradeType">학점 타입:</label>
+    <input type="text" id="gradeType" name="gradeType" required><br>
+
+    <button type="submit">등록</button>
+</form>
+</body>
+</html>

@@ -1,17 +1,19 @@
 package com.kernel360.sisspring.report;
 
-import com.kernel360.sisspring.grade.BasicEvaluation;
-import com.kernel360.sisspring.grade.GradeEvaluation;
-import com.kernel360.sisspring.grade.MajorEvaluation;
-import com.kernel360.sisspring.grade.PassFailEvaluation;
-import com.kernel360.sisspring.school.School;
-import com.kernel360.sisspring.school.Score;
-import com.kernel360.sisspring.school.Student;
-import com.kernel360.sisspring.school.Subject;
+import com.kernel360.sisspring.service.BasicEvaluation;
+import com.kernel360.sisspring.service.GradeEvaluation;
+import com.kernel360.sisspring.service.MajorEvaluation;
+import com.kernel360.sisspring.service.PassFailEvaluation;
+import com.kernel360.sisspring.db.School;
+import com.kernel360.sisspring.db.Score;
+import com.kernel360.sisspring.db.Student;
+import com.kernel360.sisspring.db.Subject;
 import com.kernel360.sisspring.utils.Define;
+import org.springframework.stereotype.Service;
+import java.util.List;
 
-import java.util.ArrayList;
 
+@Service
 public class GenerateGradeReport {
 
 	School school = School.getInstance();
@@ -21,7 +23,7 @@ public class GenerateGradeReport {
 	private StringBuilder buffer = new StringBuilder();
 	
 	public String getReport(){
-		ArrayList<Subject> subjectList = school.getSubjectList();  // 모든 과목에 대한 학점 산출
+		List<Subject> subjectList = school.getSubjectList();  // 모든 과목에 대한 학점 산출
 		for( Subject subject : subjectList) {
 			makeHeader(subject);
 			makeBody(subject);
@@ -40,7 +42,7 @@ public class GenerateGradeReport {
 	
 	public void makeBody(Subject subject){
 		
-		ArrayList<Student> studentList = subject.getStudentList();  // 각 과목의 학생들
+		List<Student> studentList = subject.getStudentList();  // 각 과목의 학생들
 		
 		for(int i=0; i<studentList.size(); i++){
 			Student student = studentList.get(i);
@@ -48,7 +50,7 @@ public class GenerateGradeReport {
 			buffer.append(" | ");
 			buffer.append(student.getStudentId());
 			buffer.append(" | ");
-			buffer.append(student.getMajorSubject().getSubjectName() + "\t");
+			buffer.append(student.getSubject().getSubjectName() + "\t");
 			buffer.append(" | ");
 			
 			getScoreGrade(student, subject);  //학생별 해당과목 학점 계산
@@ -59,17 +61,16 @@ public class GenerateGradeReport {
 	
 	public void getScoreGrade(Student student, Subject subject){
 		
-		ArrayList<Score> scoreList = student.getScoreList();
-		int majorId = student.getMajorSubject().getSubjectId();
+		List<Score> scoreList = student.getScoreList();
+		int majorId = student.getSubject().getSubjectId();
 
 		
 		for(int i=0; i<scoreList.size(); i++){  // 학생이 가진 점수들 
 			
 			Score score = scoreList.get(i);
-			if(score.getSubject().getSubjectId() == subject.getSubjectId()) {  // 현재 학점을 산출할 과목 
+			if(score.getSubject().getSubjectId() == subject.getSubjectId()) {  // 현재 학점을 산출할 과목
 
 				evaluateGradeByScoreAndStrategy(subject, score, majorId);
-				
 			}
 		}
 	}
