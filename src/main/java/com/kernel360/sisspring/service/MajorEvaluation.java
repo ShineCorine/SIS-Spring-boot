@@ -1,6 +1,7 @@
-package com.kernel360.sisspring.grade;
+package com.kernel360.sisspring.service;
 
-public class MajorEvaluation implements GradeEvaluation{
+
+public class MajorEvaluation implements GradeEvaluation {
 
 	@Override
 	public String getGrade(int point) {

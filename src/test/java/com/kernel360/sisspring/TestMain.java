@@ -8,10 +8,10 @@ package com.kernel360.sisspring;
 //import utils.Define;
 
 import com.kernel360.sisspring.report.GenerateGradeReport;
-import com.kernel360.sisspring.school.School;
-import com.kernel360.sisspring.school.Score;
-import com.kernel360.sisspring.school.Student;
-import com.kernel360.sisspring.school.Subject;
+import com.kernel360.sisspring.db.School;
+import com.kernel360.sisspring.db.Score;
+import com.kernel360.sisspring.db.Student;
+import com.kernel360.sisspring.db.Subject;
 import com.kernel360.sisspring.utils.Define;
 
 public class TestMain {
@@ -109,7 +109,7 @@ public class TestMain {
 	//과목별 성적 입력
 	public void addScoreForStudent(Student student, Subject subject, int point){
 		
-		Score score = new Score(student.getStudentId(), subject, point);
+		Score score = new Score(student, subject, point);
 		student.addSubjectScore(score);
 		
 	}
