@@ -28,6 +28,10 @@ public class Score {
 		this.point = point;
 	}
 
+	public Score(Student student, Subject subject) {
+		this(student, subject, 0);
+	}
+
 
 	public String toString(){
 		return "학번:" + student.getStudentId() + "," + subject.getSubjectName() + ":" + point;

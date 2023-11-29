@@ -50,7 +50,7 @@ public class GenerateGradeReport {
 			buffer.append(" | ");
 			buffer.append(student.getStudentId());
 			buffer.append(" | ");
-			buffer.append(student.getSubject().getSubjectName() + "\t");
+			buffer.append(student.getMajorSubject().getSubjectName() + "\t");
 			buffer.append(" | ");
 			
 			getScoreGrade(student, subject);  //학생별 해당과목 학점 계산
@@ -62,7 +62,7 @@ public class GenerateGradeReport {
 	public void getScoreGrade(Student student, Subject subject){
 		
 		List<Score> scoreList = student.getScoreList();
-		int majorId = student.getSubject().getSubjectId();
+		int majorId = student.getMajorSubject().getSubjectId();
 
 		
 		for(int i=0; i<scoreList.size(); i++){  // 학생이 가진 점수들 

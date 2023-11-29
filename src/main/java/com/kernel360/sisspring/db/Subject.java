@@ -7,8 +7,6 @@ import lombok.*;
 import java.util.ArrayList;
 import java.util.List;
 
-
-
 @Getter
 @Setter
 @Entity
@@ -26,7 +24,7 @@ public class Subject {
 	
 	//수강 신청한 학생 리스트
 	//register() 메서드를 호출하면 리스트에 추가 됨
-	@OneToMany(mappedBy = "subject", cascade = CascadeType.ALL)
+	@ManyToMany(mappedBy = "subjects", cascade = CascadeType.ALL)
 	private List<Student> studentList = new ArrayList<>();
 	
 	public Subject(String subjectName, int subjectId){
@@ -37,7 +35,7 @@ public class Subject {
 
 	public void register(Student student){  //수강신청
 		studentList.add(student);
-		student.setSubject(this);
+		student.setMajorSubject(this);
 	}
 
 }
