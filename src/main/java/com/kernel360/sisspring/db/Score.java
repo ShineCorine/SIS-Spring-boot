@@ -20,7 +20,7 @@ public class Score {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "subject_id")
 	Subject subject; //과목
-	int point;      //점수
+	private int point;      //점수
 
 	public Score(Student student, Subject subject, int point) {
 		this.student = student;

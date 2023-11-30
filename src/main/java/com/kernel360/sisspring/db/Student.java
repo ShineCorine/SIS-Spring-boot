@@ -25,11 +25,11 @@ public class Student {
 	@JoinColumn(name = "subject_id")
 	private Subject majorSubject;	//중점 과목
 
-	@ManyToMany
-	@JoinTable(name = "score",
-			joinColumns = @JoinColumn(name = "student_id"),
-			inverseJoinColumns = @JoinColumn(name = "subject_id"))
-	private List<Subject> subjects;
+//	@ManyToMany
+//	@JoinTable(name = "score",
+//			joinColumns = @JoinColumn(name = "student_id"),
+//			inverseJoinColumns = @JoinColumn(name = "subject_id"))
+//	private List<Subject> subjects;
 	
 	//학생의 성적 리스트 
 	//addSubjectSocre() 메서드가 호출되면 리스트에 추가 됨
@@ -48,7 +48,7 @@ public class Student {
 		score.setStudent(this);
 	}
 
-	public void enrollInSubject(Subject subject) {
-		subjects.add(subject);
-	}
+//	public void enrollInSubject(Subject subject) {
+//		subjects.add(subject);
+//	}
 }

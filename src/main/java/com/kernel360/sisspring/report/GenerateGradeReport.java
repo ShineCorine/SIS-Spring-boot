@@ -1,19 +1,15 @@
 package com.kernel360.sisspring.report;
 
-import com.kernel360.sisspring.service.BasicEvaluation;
-import com.kernel360.sisspring.service.GradeEvaluation;
-import com.kernel360.sisspring.service.MajorEvaluation;
-import com.kernel360.sisspring.service.PassFailEvaluation;
-import com.kernel360.sisspring.db.School;
-import com.kernel360.sisspring.db.Score;
-import com.kernel360.sisspring.db.Student;
-import com.kernel360.sisspring.db.Subject;
+import com.kernel360.sisspring.db.*;
+import com.kernel360.sisspring.service.*;
 import com.kernel360.sisspring.utils.Define;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
 
 @Service
+@RequiredArgsConstructor
 public class GenerateGradeReport {
 
 	School school = School.getInstance();
@@ -21,12 +17,13 @@ public class GenerateGradeReport {
 	public static final String HEADER = " 이름  |  학번  |중점과목| 점수   \n";
 	public static final String LINE = "-------------------------------------\n";
 	private StringBuilder buffer = new StringBuilder();
+
 	
 	public String getReport(){
 		List<Subject> subjectList = school.getSubjectList();  // 모든 과목에 대한 학점 산출
 		for( Subject subject : subjectList) {
 			makeHeader(subject);
-			makeBody(subject);
+//			makeBody(subject);
 			makeFooter();
 		}
 		return buffer.toString();  // String 으로 반환
@@ -40,25 +37,25 @@ public class GenerateGradeReport {
 		buffer.append(GenerateGradeReport.LINE);
 	} 
 	
-	public void makeBody(Subject subject){
-		
-		List<Student> studentList = subject.getStudentList();  // 각 과목의 학생들
-		
-		for(int i=0; i<studentList.size(); i++){
-			Student student = studentList.get(i);
-			buffer.append(student.getStudentName());
-			buffer.append(" | ");
-			buffer.append(student.getStudentId());
-			buffer.append(" | ");
-			buffer.append(student.getMajorSubject().getSubjectName() + "\t");
-			buffer.append(" | ");
-			
-			getScoreGrade(student, subject);  //학생별 해당과목 학점 계산
-			buffer.append("\n");
-			buffer.append(LINE);
-		}
-	}
-	
+//	public void makeBody(Subject subject){
+//
+//		List<Student> studentList = subject.getStudentList();  // 각 과목의 학생들
+//
+//		for(int i=0; i<studentList.size(); i++){
+//			Student student = studentList.get(i);
+//			buffer.append(student.getStudentName());
+//			buffer.append(" | ");
+//			buffer.append(student.getStudentId());
+//			buffer.append(" | ");
+//			buffer.append(student.getMajorSubject().getSubjectName() + "\t");
+//			buffer.append(" | ");
+//
+//			getScoreGrade(student, subject);  //학생별 해당과목 학점 계산
+//			buffer.append("\n");
+//			buffer.append(LINE);
+//		}
+//	}
+//
 	public void getScoreGrade(Student student, Subject subject){
 		
 		List<Score> scoreList = student.getScoreList();

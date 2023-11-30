@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -45,26 +46,23 @@ public class StudentService {
 
     public boolean enrollStudentInSubject(Long studentId, Long subjectId) {
         Student student = studentRepository.findById(studentId).orElseThrow(
-                () -> new RuntimeException("잘못된 학생 아이디입니다: "+ studentId)
+                () -> new RuntimeException("잘못된 학생 아이디입니다: " + studentId)
         );
         Subject subject = subjectRepository.findById(subjectId).orElseThrow(
-                () -> new RuntimeException("잘못된 과목 아이디입니다: "+ subjectId)
+                () -> new RuntimeException("잘못된 과목 아이디입니다: " + subjectId)
         );
 
-        // 이미 수강 중이거나 수강 가능한 상태인지 확인
-        if (!student.getSubjects().contains(subject)) {
-            // 수강 가능한 상태이면 수강 처리
-            student.enrollInSubject(subject);
-
-            // 성적 관련 로직 추가: 학생과 과목 간의 성적을 초기화하고 저장
-            Score score = new Score(student, subject);
-            scoreRepository.save(score);
-
-//            studentRepository.save(student);
+        Optional<Score> score = scoreRepository.findByStudentIdAndSubjectId(studentId, subjectId);
+        if (score.isEmpty()) {
+            Score newScore = Score.builder()
+                    .student(student)
+                    .subject(subject)
+                    .build();
+            scoreRepository.save(newScore);
             return true;
+
         }
 
-        // 수강 실패
         return false;
     }
 }

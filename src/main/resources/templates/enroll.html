@@ -11,7 +11,7 @@
 <h2>수강신청</h2>
 
 <!-- 학생 선택 폼 -->
-<form th:action="@{/enroll}" method="post">
+<form  th:action="@{/enroll}" method="post">
   <label for="studentId">학생 선택:</label>
   <select id="studentId" name="studentId" required>
     <option th:each="student : ${students}" th:value="${student.id}" th:text="${student.studentName}"></option>
@@ -23,7 +23,7 @@
 <form th:if="${selectedStudent != null}" th:action="@{/enroll}" method="post">
   <input type="hidden" name="studentId" th:value="${selectedStudent.id}" />
   <label for="subjectId">과목 선택:</label>
-  <select id="subjectId" name="subjectId" required>
+  <select id="subjectId" name="subjectId" required >
     <option th:each="subject : ${subjects}" th:value="${subject.id}" th:text="${subject.subjectName}"></option>
   </select>
   <button type="submit">수강신청</button>

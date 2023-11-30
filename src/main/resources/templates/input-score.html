@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>성적 입력 페이지</title>
+</head>
+<body>
+<header th:insert="~{layout::nav}">
+</header>
+<h2>성적 입력</h2>
+<main class="container mt-4">
+
+
+    <!-- 과목 선택 폼 -->
+    <form th:if="${selectedSubject == null}" id="scoreForm" th:action="@{/score/select}" method="post">
+        <div class="form-group">
+            <label for="subjectId">Select Subject:</label>
+            <select class="form-control" id="subjectId" name="subjectId" onchange="submitForm()">
+                <!-- 여기에 과목 목록을 동적으로 추가 -->
+                <option th:each="subject : ${subjects}" th:value="${subject.id}" th:text="${subject.getSubjectName()}"></option>
+            </select>
+        </div>
+    </form>
+
+    <h4 th:unless="${selectedSubject == null}" th:text="${selectedSubject.getSubjectName()}"></h4>
+
+        <!-- 수강 중인 학생 목록 -->
+    <form th:unless="${selectedSubject == null}" th:object="${scores}"  th:action="@{/score/process}" method="post">
+        <input type="hidden" name="subjectId" th:value="${selectedSubject.id}" />
+        <div th:if="${enrolledStudents}">
+<!--            <h4>학생 리스트</h4>-->
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Student ID</th>
+                    <th>Student Name</th>
+                    <th>Score</th>
+                </tr>
+                </thead>
+                <tbody>
+                <!-- 학생 목록을 동적으로 추가 -->
+                <tr th:each="score, itemStat : *{scoreList}">
+                    <td th:text="${score.student.studentId}"></td>
+                    <td th:text="${score.student.getStudentName()}"></td>
+                    <td>
+                        <input type="hidden" name="scoreId" th:field="*{scoreList[__${itemStat.index}__].id}" />
+                        <input type="hidden" name="student" th:field="*{scoreList[__${itemStat.index}__].student}" />
+                        <input type="hidden" name="subject" th:field="*{scoreList[__${itemStat.index}__].subject}" />
+                        <input type="number" class="form-control" th:field="*{scoreList[__${itemStat.index}__].point}"  placeholder="Enter score"/>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+            <!-- Submit 버튼 -->
+            <button type="submit" class="btn btn-primary">성적 제출</button>
+        </div>
+    </form>
+</main>
+
+<script>
+    // 과목 선택 시 자동으로 폼을 제출하는 함수
+    function submitForm() {
+        document.getElementById("scoreForm").submit();
+    }
+</script>
+</body>
+</html>

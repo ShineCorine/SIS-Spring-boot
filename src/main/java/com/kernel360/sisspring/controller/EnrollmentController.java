@@ -48,7 +48,6 @@ public class EnrollmentController {
         }
 
         Student selectedStudent = studentService.getStudentById(studentId);
-//        List<Subject> subjects = subjectService.getSubjectsAvailableForEnrollment(studentId);
         List<Subject> subjects = subjectService.getClasses(studentId);
         model.addAttribute("selectedStudent", selectedStudent);
         model.addAttribute("subjects", subjects);

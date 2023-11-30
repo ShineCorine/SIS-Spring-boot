@@ -13,6 +13,8 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class SubjectService {
+
+    private final ScoreService scoreService;
     private final SubjectRepository subjectRepository;
     private final StudentRepository studentRepository;
     private final ScoreRepository scoreRepository;
@@ -51,12 +53,16 @@ public class SubjectService {
     }
 
     public List<Subject> getClasses(Long studentId) {
+        //학생이 등록한 과목 가져오기
+
+
         List<Long> enrolledSubjectIdList = scoreRepository.findAllByStudentId(studentId).stream()
                 .map(score -> score.getSubject().getId())
                 .toList();
         List<Long> entireSubjects = subjectRepository.findAll().stream().map(
                 Subject::getId
         ).toList();
+
 
         // Filter out the subjects that are in enrolledSubjectIdList
         List<Long> remainingSubjectIds = entireSubjects.stream()
@@ -65,5 +71,26 @@ public class SubjectService {
 
         // Use the remainingSubjectIds to fetch the corresponding subjects from the subjectRepository
         return subjectRepository.findAllById(remainingSubjectIds);
+    }
+
+    public List<Subject> getAllClasses() {
+        return subjectRepository.findAll();
+    }
+
+    public List<Student> enRolledStudent(Long subjectId) {
+        subjectRepository.findById(subjectId).orElseThrow(
+                () -> new RuntimeException("해당하는 과목이 없습니다: " + subjectId)
+        );
+
+        return scoreService.getListBySubjectId(subjectId).stream()
+                .map(Score::getStudent)
+                .toList();
+    }
+
+    public Subject getSubjjectByName(Long subjectId) {
+
+        return subjectRepository.findById(subjectId).orElseThrow(
+                () -> new RuntimeException("해당 과목이 없습니다: "+subjectId)
+        );
     }
 }
