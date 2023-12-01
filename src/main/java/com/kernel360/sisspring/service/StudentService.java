@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -60,10 +61,13 @@ public class StudentService {
                     .build();
             scoreRepository.save(newScore);
             return true;
-
         }
-
         return false;
+    }
+
+    public boolean isMajorSubject(Student student, Subject subject) {
+        Subject majorSubject = student.getMajorSubject();
+        return Objects.equals(majorSubject.getId(), subject.getId());
     }
 }
 

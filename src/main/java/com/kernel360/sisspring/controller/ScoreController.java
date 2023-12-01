@@ -6,7 +6,6 @@ import com.kernel360.sisspring.db.Student;
 import com.kernel360.sisspring.db.Subject;
 import com.kernel360.sisspring.model.UpdateScoreDto;
 import com.kernel360.sisspring.service.ScoreService;
-import com.kernel360.sisspring.service.StudentService;
 import com.kernel360.sisspring.service.SubjectService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -21,7 +20,6 @@ import java.util.List;
 public class ScoreController {
 
     private final SubjectService subjectService;
-    private final StudentService studentService;
     private final ScoreService scoreService;
 
     @GetMapping
@@ -29,14 +27,14 @@ public class ScoreController {
     ){
         List<Subject> subjects = subjectService.getAllClasses();
         model.addAttribute("subjects", subjects);
-        return "input-score";
+        return "score-input";
     }
     @PostMapping("/select")
     public String inputScore(
             @RequestParam("subjectId") Long subjectId,
             Model model
     ){
-        Subject selectedsubject = subjectService.getSubjjectByName(subjectId);
+        Subject selectedsubject = subjectService.getSubjectByName(subjectId);
         model.addAttribute("selectedSubject", selectedsubject);
         List<Student> students = subjectService.enRolledStudent(subjectId);
         model.addAttribute("enrolledStudents", students);
@@ -45,7 +43,7 @@ public class ScoreController {
         model.addAttribute("scores", updateScoreDto);
 //        model.addAttribute("")
 
-        return "input-score";
+        return "score-input";
     }
     @PostMapping("/process")
     public String submitScores(
@@ -55,8 +53,13 @@ public class ScoreController {
     ) {
 
         scoreService.updateScores(updateScoreDto.getScoreList());
+        List<Score> updatedScoreList = scoreService.getListBySubjectId(subjectId);
+        String subjectName = subjectService.getSubjectByName(subjectId).getSubjectName();
+        model.addAttribute("subjectName", subjectName);
+        model.addAttribute("updatedScoreList", updatedScoreList);
 
-        return "redirect:/score";  // 성적 제출 후 다시 성적 입력 페이지로 이동
+        // 성적 확인 화면으로 이동
+        return "score-input-result";  // 성적 제출 후 다시 성적 입력 페이지로 이동
     }
 
 

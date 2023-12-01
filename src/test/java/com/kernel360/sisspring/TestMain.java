@@ -45,7 +45,7 @@ public class TestMain {
 		
 		korean = new Subject("국어", Define.KOREAN);
 		math = new Subject("수학", Define.MATH);
-		dance = new Subject("방송댄스", Define.DANCE);
+		dance = new Subject("방송 댄스", Define.DANCE);
 		
 		dance.setGradeType(Define.PF_TYPE);
 		
@@ -69,22 +69,22 @@ public class TestMain {
 		goodSchool.addStudent(student4);
 		goodSchool.addStudent(student5);
 
-		korean.register(student1);
-		korean.register(student2);
-		korean.register(student3);
-		korean.register(student4);
-		korean.register(student5);
-		
-		math.register(student1);
-		math.register(student2);
-		math.register(student3);
-		math.register(student4);
-		math.register(student5);
-		
-		
-		dance.register(student1);
-		dance.register(student2);
-		dance.register(student3);
+//		korean.register(student1);
+//		korean.register(student2);
+//		korean.register(student3);
+//		korean.register(student4);
+//		korean.register(student5);
+//
+//		math.register(student1);
+//		math.register(student2);
+//		math.register(student3);
+//		math.register(student4);
+//		math.register(student5);
+//
+//
+//		dance.register(student1);
+//		dance.register(student2);
+//		dance.register(student3);
 		
 		addScoreForStudent(student1, korean, 95); 
 		addScoreForStudent(student1, math, 56);	

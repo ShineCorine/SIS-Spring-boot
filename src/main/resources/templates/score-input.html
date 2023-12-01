@@ -16,6 +16,7 @@
             <label for="subjectId">Select Subject:</label>
             <select class="form-control" id="subjectId" name="subjectId" onchange="submitForm()">
                 <!-- 여기에 과목 목록을 동적으로 추가 -->
+                <option>과목을 선택해주세요</option>
                 <option th:each="subject : ${subjects}" th:value="${subject.id}" th:text="${subject.getSubjectName()}"></option>
             </select>
         </div>

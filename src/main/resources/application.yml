@@ -10,6 +10,6 @@ Spring:
 
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/sis?useSSL=false&serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    url: jdbc:mysql://localhost:3306/sis
     username: ${DB_ID}
     password: ${DB_PASSWORD}

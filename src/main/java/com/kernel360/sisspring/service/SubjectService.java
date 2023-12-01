@@ -7,7 +7,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 
 @Service
@@ -55,7 +54,6 @@ public class SubjectService {
     public List<Subject> getClasses(Long studentId) {
         //학생이 등록한 과목 가져오기
 
-
         List<Long> enrolledSubjectIdList = scoreRepository.findAllByStudentId(studentId).stream()
                 .map(score -> score.getSubject().getId())
                 .toList();
@@ -87,7 +85,7 @@ public class SubjectService {
                 .toList();
     }
 
-    public Subject getSubjjectByName(Long subjectId) {
+    public Subject getSubjectByName(Long subjectId) {
 
         return subjectRepository.findById(subjectId).orElseThrow(
                 () -> new RuntimeException("해당 과목이 없습니다: "+subjectId)

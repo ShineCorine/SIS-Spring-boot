@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>성적 조회</title>
+</head>
+<body>
+<header th:insert="~{layout::nav}"></header>
+
+<h2>성적 조회</h2>
+
+<!-- 과목 선택 폼 -->
+<form th:action="@{/grade/select}" method="post">
+  <label for="subjectId">과목 선택:</label>
+  <select id="subjectId" name="subjectId" required onchange="">
+    <option th:each="subject : ${subjects}" th:value="${subject.id}" th:text="${subject.subjectName}"></option>
+  </select>
+  <button type="submit">수강신청</button>
+</form>
+
+<!-- 학생 선택 폼 -->
+<!--<form  th:action="@{/grade}" method="post">-->
+<!--  <input type="hidden" name="subjectId" th:value="${subject.id}" />-->
+<!--  <label for="studentId">과목 선택:</label>-->
+<!--  <select id="studentId" name="studentId" required>-->
+<!--    <option th:each="student : ${students}" th:value="${student.id}" th:text="${student.studentName}"></option>-->
+<!--  </select>-->
+<!--  <button type="submit">학생 선택 완료</button>-->
+<!--</form>-->
+</body>
+</html>
