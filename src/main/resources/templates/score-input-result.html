@@ -1,17 +1,15 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <title>성적 결과 페이지</title>
+<head th:replace="layout::htmlHead">
 </head>
-<body>
+<body class="container">
 <header th:insert="~{layout::nav}">
 </header>
+<section>
 <h2>성적 결과</h2>
-<main class="container mt-4">
-
-    <div>
+    <div class="row">
         <h2 th:text="${subjectName}"></h2>
-        <table>
+        <table class="table table-hover">
             <thead>
             <tr>
                 <th>Student Name</th>
@@ -26,8 +24,7 @@
             </tbody>
         </table>
     </div>
-
-</main>
+</section>
 
 <script>
     // 과목 선택 시 자동으로 폼을 제출하는 함수

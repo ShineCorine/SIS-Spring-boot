@@ -1,40 +1,39 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
+<head th:replace="layout::htmlHead">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>성적 조회</title>
 </head>
-<body>
-<header th:insert="~{layout::nav}"></header>
-
-<h2>성적 결과</h2>
-
-<section class="subject_result">
-  <h2 th:text="${subjectName}"></h2>
-  <table class="show_grade">
-    <thead>
-    <tr>
-      <th>No</th>
-      <th>Student ID</th>
-      <th>Student Name</th>
-      <th>Score</th>
-      <th>Grade</th>
-    </tr>
-    </thead>
-    <tbody>
-    <!-- 학생 목록을 동적으로 추가 -->
-    <tr th:each="gradeInfo : ${gradeInfoList}">
-      <td th:text="${gradeInfo.id}"></td>
-      <td th:text="${gradeInfo.studentId}"></td>
-      <td th:text="${gradeInfo.studentName}"></td>
-      <td th:text="${gradeInfo.score}"></td>
-      <td th:text="${gradeInfo.grade}"></td>
-      <td></td>
-    </tr>
-    </tbody>
-  </table>
-</section>
-
-</body>
+<body class="container">
+  <header th:insert="~{layout::nav}"></header>
+  <section class="row">
+    <h2>성적 결과</h2>
+      <div class="subject_result">
+        <h2 th:text="${subjectName}"></h2>
+        <table class="show_grade">
+          <thead>
+          <tr>
+            <th>No</th>
+            <th>Student ID</th>
+            <th>Student Name</th>
+            <th>Score</th>
+            <th>Grade</th>
+          </tr>
+          </thead>
+          <tbody>
+          <!-- 학생 목록을 동적으로 추가 -->
+          <tr th:each="gradeInfo : ${gradeInfoList}">
+            <td th:text="${gradeInfo.id}"></td>
+            <td th:text="${gradeInfo.studentId}"></td>
+            <td th:text="${gradeInfo.studentName}"></td>
+            <td th:text="${gradeInfo.score}"></td>
+            <td th:text="${gradeInfo.grade}"></td>
+            <td></td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </body>
 </html>

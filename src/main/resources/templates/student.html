@@ -1,26 +1,28 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
+<head th:replace="layout::htmlHead">
     <title>과목 등록 결과 화면</title>
 </head>
-<body>
-<header th:insert="~{layout::nav}">
-</header>
-<h2>학생 등록</h2>
-<form action="#" th:action="@{/students}" th:object="${student}" method="post">
-    <label for="studentId">학번:</label>
-    <input type="text" id="studentId" name="studentId" required><br>
+<body class="container">
+    <header th:insert="~{layout::nav}">
+    </header>
+    <section>
+        <h2>학생 등록</h2>
+        <form action="#" th:action="@{/students}" th:object="${student}" method="post">
+            <label for="studentId">학번:</label>
+            <input type="text" id="studentId" name="studentId" required><br>
 
-    <label for="studentName">이름: </label>
-    <input type="text" id="studentName" name="studentName" required><br>
+            <label for="studentName">이름: </label>
+            <input type="text" id="studentName" name="studentName" required><br>
 
-    <label for="major">전공: </label>
-    <select id="major" name="major" required>
-        <option th:each="major : ${majors}" th:text="${major}"></option>
-<!--        <option th:each="major : ${majors}" th:value="${major.id}" th:text="${major.subjectName}"></option>-->
-    </select><br>
+            <label for="major">전공: </label>
+            <select id="major" name="major" required>
+                <option th:each="major : ${majors}" th:text="${major}"></option>
+        <!--        <option th:each="major : ${majors}" th:value="${major.id}" th:text="${major.subjectName}"></option>-->
+            </select><br>
 
-    <button type="submit">등록</button>
-</form>
+            <button type="submit">등록</button>
+        </form>
+    </section>
 </body>
 </html>
